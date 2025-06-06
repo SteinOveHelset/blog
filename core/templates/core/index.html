@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="blog-posts">
+    {% for article in articles %}
+        <div class="post">
+            {% if article.image %}
+                <img src="{{ article.image.url }}">
+            {% endif %}
+
+            <h2 class="text-2xl"><a href="{% url 'detail' article.id %}">{{ article.title }}</a></h2>
+            <p>{{ article.body|safe|truncatewords:30 }}</p>
+            <p><small>Published on {{ article.created_at }}</small></p>
+
+            <a href="{% url 'detail' article.id %}">Read more</a>
+        </div>
+    {% empty %}
+        <p>No blog articles available.</p>
+    {% endfor %}
+</div>
+{% endblock %}
